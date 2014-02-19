@@ -68,7 +68,9 @@
                 filtertextclear         : 'show all',
                 nonselectedlistlabel    : false,            // 'string', false
                 selectedlistlabel       : false,            // 'string', false
-                filteronvalues          : false             // filter by selector's values, boolean
+                filteronvalues          : false,            // filter by selector's values, boolean
+                hidemoveall             : false,            // true/false (hides moveall/removeall buttons) 
+		moveondblclick          : false,            // true/false (does move on select's action, but on dblclick instead)
             }, options);
 
             var container;
@@ -92,17 +94,19 @@
                     info2: $('.box2 .info', container),
                     select1: $('.box1 select', container),
                     select2: $('.box2 select', container),
+                    movegroup: $('.box1 .buttons', container),
+                    removegroup: $('.box2 .buttons', container),
                     movebutton: $('.box1 .move', container),
                     removebutton: $('.box2 .remove', container),
                     moveallbutton: $('.box1 .moveall', container),
                     removeallbutton: $('.box2 .removeall', container),
                     form: $($('.box1 .filter', container)[0].form)
-                },
-                i = 0,
-                selectedelements = 0,
-                // Selections are invisible on android if the containing select is styled with CSS
-                // http://code.google.com/p/android/issues/detail?id=16922
-                isbuggyandroid = /android/i.test(navigator.userAgent.toLowerCase());
+            },
+            i = 0,
+            selectedelements = 0,
+            // Selections are invisible on android if the containing select is styled with CSS
+            // http://code.google.com/p/android/issues/detail?id=16922
+            isbuggyandroid = /android/i.test(navigator.userAgent.toLowerCase());
 
             init();
 
@@ -114,9 +118,18 @@
                     settings.preserveselectiononmove = false;
                 }
 
-                if (settings.moveonselect) {
-                    container.addClass('moveonselect');
-                }
+                if (settings.moveonselect && settings.hidemoveall) {
+                    container.addClass('nobuttons');
+                } else if (settings.hidemoveall || settings.moveonselect) {
+                    elements.movegroup.removeClass('btn-group');
+                    elements.removegroup.removeClass('btn-group');
+                    if (settings.moveonselect) {
+                        container.addClass('moveonselect');
+                    } else if (settings.hidemoveall) {
+                        container.addClass('hidemoveall');
+                    }
+                } 
+
 
                 var originalselectname = elements.originalselect.attr('name') || '';
 
@@ -335,8 +348,14 @@
                     elements.select2.on('change', function() {
                         remove();
                     });
+                } else if (settings.moveondblclick) {
+                    elements.select1.on('dblclick', function() {
+                        move();
+                    });
+                    elements.select2.on('dblclick', function() {
+                        remove();
+                    });
                 }
-
             }
 
             function saveselections1()

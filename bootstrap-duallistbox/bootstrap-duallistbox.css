@@ -76,3 +76,18 @@
 .bootstrap-duallistbox-container.moveonselect .removeall {
     width: 100%;
 }
+
+.bootstrap-duallistbox-container.hidemoveall .move,
+.bootstrap-duallistbox-container.hidemoveall .remove {
+    width: 100%;
+    display: block;
+}
+
+.bootstrap-duallistbox-container.hidemoveall .moveall,
+.bootstrap-duallistbox-container.hidemoveall .removeall {
+    display:none;
+}
+
+.bootstrap-duallistbox-container.nobuttons .btn-group {
+    display: none;
+}
