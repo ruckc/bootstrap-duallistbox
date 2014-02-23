@@ -3,6 +3,19 @@
     margin-bottom: -1px;
 }
 
+.bootstrap-duallistbox-container .buttons .btn {
+    border-radius: 0;
+}
+
+.bootstrap-duallistbox-container .filter-group {
+    margin: 0 0 -1px 0;
+}
+.bootstrap-duallistbox-container .filter-group .input-group-addon,
+.bootstrap-duallistbox-container .filter-group .form-control {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 .bootstrap-duallistbox-container label {
     display: block;
 }
@@ -56,7 +69,7 @@
 .bootstrap-duallistbox-container .filter {
     display: inline-block;
     width: 100%;
-    height: 31px;
+/*    height: 31px; */
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
